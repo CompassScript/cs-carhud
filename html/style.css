@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: none;
+}
+
+.mainBody {
+    width: 100%;
+    height: 100%;
+}
+
+.progressBorder {
+    position: absolute;
+    bottom: 5vh;
+    right: 2vw;
+}
+
+.progressInner{
+    width: 20vw;
+    height: 5vh;
+    background: rgba(63, 63, 63, 0.5);
+    -webkit-clip-path: url(#my-clip-path);
+    clip-path: url(#my-clip-path);
+    overflow: hidden;
+}
+
+.progress{
+    width: 10%;
+    height: 5vh;
+    background: rgb(241, 19, 74);
+    bottom: 0;
+    right: 0;
+    transition: 200ms;
+}
+
+.svg {
+  width: 0;
+  height: 0;
+}
+
+.vehObject {
+    display: flex;
+}
+
+.vehObject svg {
+    width: 1.5vw;
+}
+
+.headlights svg {
+    fill: #0fa4e9;
+    filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.4));
+}
+
+.handbrake svg {
+    fill: #e0e0e0;
+    filter: drop-shadow(3px 5px 2px #dbdbdb96);
+}
+
+.engineHp svg {
+    fill : rgb(170, 185, 104);
+    filter: drop-shadow(3px 5px 2px rgba(0,0,0,0.4))
+}
+
+.pump svg {
+    fill: #8eda50;
+    filter: drop-shadow(3px 5px 2px #8eda509a);
+}
+
+.seatbelt svg {
+    fill: #8eda50;
+    filter: drop-shadow(3px 5px 2px #8eda509a);
+}
+
+.mxPack {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.speedo {
+    width: 100%;
+    font-weight: 600;
+    font-family: 'Montserrat';
+    font-size: 1vw;
+    place-content: space-around;
+    display: flex;
+}
+
+.speedo .speeds {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    text-align: center;
+}
+
+.speedo span {
+    color :rgb(241, 19, 74);
+    font-size: 1.5vw;
+    width: 50%;
+}
+
+
+.speedo .gear {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    text-align: center;
+    justify-content: flex-end;
+}
+
+.speedo p {
+    color: white;
+    width: 50%;
+}

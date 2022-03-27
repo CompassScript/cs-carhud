@@ -12,7 +12,7 @@ Citizen.CreateThread(function()
             local veh = GetVehiclePedIsUsing(ply)
             local fuel = GetVehicleFuelLevel(veh)
             local gear = GetVehicleCurrentGear(veh)
-            local speedo = (GetEntitySpeed(veh)*3.6)
+            local speedo = (GetEntitySpeed(veh)*3.6) --mph *2.236936
             local rpm = GetVehicleCurrentRpm(veh)
             local rpmMat = math.ceil(rpm * 10000 - 2001, 2) / 80
             local engineHp = GetVehicleEngineHealth(veh)
@@ -46,6 +46,8 @@ Citizen.CreateThread(function()
         end
 	end
 end)
+
+RegisterKeyMapping('seatbelt', 'Seat Belt', 'keyboard', 'K')
 
 RegisterCommand('seatbelt', function()
     local ply = PlayerPedId()

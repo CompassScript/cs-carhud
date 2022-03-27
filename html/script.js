@@ -4,7 +4,13 @@ window.addEventListener("message", function(event) {
         case 'show':
             $('body').css({'display': `block`})
             var speedsInt = incomData.speedLevel.toFixed()
-            $('#gear span').text(incomData.gearLevel)
+            if (incomData.gearLevel == 0 && incomData.rpmLevel > 1) {
+                $('#gear span').text(`R`)
+            } else if (incomData.gearLevel == 0) {
+                $('#gear span').text(`N`)
+            } else if (incomData.gearLevel > 0) {
+                $('#gear span').text(incomData.gearLevel)
+            }
             $('#speeds span').text(speedsInt)
             $('.progress').css({'width': incomData.rpmLevel + `%`})
             if (incomData.fuelLevel > 80.0) {

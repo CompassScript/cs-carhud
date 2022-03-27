@@ -1,5 +1,5 @@
 seatbelttoggle = false
-
+antiSpam = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(70)
@@ -53,18 +53,28 @@ RegisterCommand('seatbelt', function()
     local ply = PlayerPedId()
     local veh = GetVehiclePedIsIn(player, false)
     local vehicleCategories = GetVehicleClass(veh)
-    if vehicleCategories ~= 13 and vehicleCategories ~= 8 then
-        seatbelttoggle = not seatbelttoggle
-        if seatbelttoggle == true then
-            SetFlyThroughWindscreenParams(10000.0, 10000.0, 17.0, 500.0);
-            while seatbelttoggle do
-                DisableControlAction(0,75)
-                Citizen.Wait(5)
+    if IsPedInAnyVehicle(ply) then
+        if antiSpam == false then
+            if vehicleCategories ~= 13 and vehicleCategories ~= 8 then
+                seatbelttoggle = not seatbelttoggle
+                if seatbelttoggle == true then
+                    antiSpam = true
+                    Wait(2000)
+                    antiSpam = false
+                    SetFlyThroughWindscreenParams(10000.0, 10000.0, 17.0, 500.0);
+                    while seatbelttoggle do
+                        DisableControlAction(0,75)
+                        Citizen.Wait(5)
+                    end
+                else
+                    SetFlyThroughWindscreenParams(16.0, 19.0, 17.0, 2000.0)
+                    SetPedConfigFlag(PlayerPedId(), 32, true)
+                    seatbelttoggle = false
+                    antiSpam = true
+                    Wait(2000)
+                    antiSpam = false
+                end
             end
-        else
-            SetFlyThroughWindscreenParams(16.0, 19.0, 17.0, 2000.0)
-            SetPedConfigFlag(PlayerPedId(), 32, true)
-            seatbelttoggle = false
         end
     end
 end, false)

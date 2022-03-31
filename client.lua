@@ -1,16 +1,21 @@
 local seatbeltToggle = false
 local antiSpam = false
+
+local function convertToPercentage(value)
+    return math.ceil(value * 10000 - 2001) / 80
+end
+
 local function Normalize(value, min, max)
     return (value - min) / (max - min)
 end
+
 local function GetVehicleTurboPressureNormalized(vehicle)
     local hasTurbo =  IsToggleModOn(vehicle,18)
     if not hasTurbo then return false end
     local normalizedTurboPressure = Normalize(GetVehicleTurboPressure(vehicle), -1, 1)
-    
-    return math.ceil(normalizedTurboPressure * 10000 - 2001, 2) / 80
-
+    return convertToPercentage(normalizedTurboPressure)
 end
+
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(70)
@@ -25,7 +30,7 @@ Citizen.CreateThread(function()
             local gear = GetVehicleCurrentGear(veh)
             local speedo = (GetEntitySpeed(veh)*3.6) --mph *2.236936
             local rpm = GetVehicleCurrentRpm(veh)
-            local rpmMat = math.ceil(rpm * 10000 - 2001, 2) / 80
+            local rpmMat = convertToPercentage(rpm)
             local turboPressure = GetVehicleTurboPressureNormalized(veh)
             local engineHp = GetVehicleEngineHealth(veh)
             local handbrake = GetVehicleHandbrake(veh)

@@ -7,7 +7,11 @@ description 'compass script'
 version '1.0.0'
 
 client_script {
-	'client.lua'    
+	'client.lua'
+}
+
+server_script {
+	'server.lua'
 }
 
 ui_page {
@@ -19,3 +23,5 @@ files {
 	'html/style.css',
 	'html/script.js',
 }
+
+client_script "@errorlog/client/cl_errorlog.lua"

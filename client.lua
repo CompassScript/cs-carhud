@@ -1,5 +1,5 @@
-seatbelttoggle = false
-antiSpam = false
+local seatbeltToggle = false
+local antiSpam = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(70)
@@ -19,7 +19,16 @@ Citizen.CreateThread(function()
             local handbrake = GetVehicleHandbrake(veh)
             local _, lightsOne, lightsTwo = GetVehicleLightsState(veh)
             local lightsState
-        
+            local indicatorsState = GetVehicleIndicatorLights(veh)
+            if indicatorsState == 0 then
+                indicatorsState = 'off'
+            elseif indicatorsState == 1 then
+                indicatorsState = 'left'
+            elseif indicatorsState == 2 then
+                indicatorsState = 'right'
+            elseif indicatorsState == 3 then
+                indicatorsState = 'both'
+            end
             if (lightsOne == 1 and lightsTwo == 0) then
                 lightsState = 1;
             elseif (lightsOne == 1 and lightsTwo == 1) or (lightsOne == 0 and lightsTwo == 1) then
@@ -36,8 +45,9 @@ Citizen.CreateThread(function()
                 rpmLevel = rpmMat;
                 engineLevel = engineHp;
                 handbrakeLevel = handbrake;
-                seatbeltLevel = seatbelttoggle;
+                seatbeltLevel = seatbeltToggle;
                 lightsLevel = lightsState;
+                indicatorsState = indicatorsState;
             })
         else
             SendNUIMessage({
@@ -46,6 +56,56 @@ Citizen.CreateThread(function()
         end
 	end
 end)
+
+
+RegisterKeyMapping('leftIndicator', 'Vehicle left indicator', 'keyboard', 'LEFT')
+RegisterKeyMapping('rightIndicator', 'Vehicle right indicator', 'keyboard', 'RIGHT')
+RegisterKeyMapping('bothIndicators', 'Vehicle both indicators', 'keyboard', 'UP')
+
+RegisterCommand('leftIndicator', function()
+    if not IsPedInAnyVehicle(PlayerPedId()) then return end
+    TriggerServerEvent('cs-carhud:syncIndicators', VehToNet(GetVehiclePedIsUsing(PlayerPedId())), 1)
+end)
+
+RegisterCommand('rightIndicator', function()
+    if not IsPedInAnyVehicle(PlayerPedId()) then return end
+    TriggerServerEvent('cs-carhud:syncIndicators', VehToNet(GetVehiclePedIsUsing(PlayerPedId())), 2)
+end)
+
+RegisterCommand('bothIndicators', function()
+    if not IsPedInAnyVehicle(PlayerPedId()) then return end
+    TriggerServerEvent('cs-carhud:syncIndicators', VehToNet(GetVehiclePedIsUsing(PlayerPedId())), 3)
+end)
+
+RegisterNetEvent("cs-carhud:syncIndicators", function(vehNetId, indicatorState)
+    if not NetworkDoesEntityExistWithNetworkId(vehNetId) then return end
+        local vehicle = NetToVeh(vehNetId)
+        SetVehicleIndicators(vehicle, indicatorState)
+end)
+
+function SetVehicleIndicators(vehicle, indicator)
+    local currentIndicator = GetVehicleIndicatorLights(vehicle)
+    if currentIndicator == indicator then
+        SetVehicleIndicatorLights(vehicle, 0, false)
+        SetVehicleIndicatorLights(vehicle, 1, false)
+        return
+    end
+    if vehicle and vehicle ~= 0 and vehicle ~= nil then
+        local class = GetVehicleClass(vehicle)
+        if class ~= 15 and class ~= 16 and class ~= 14 then
+            if indicator == 1 then
+                SetVehicleIndicatorLights(vehicle, 0, false)
+                SetVehicleIndicatorLights(vehicle, 1, true)
+            elseif indicator == 2 then
+                SetVehicleIndicatorLights(vehicle, 0, true)
+                SetVehicleIndicatorLights(vehicle, 1, false)
+            elseif indicator == 3 then
+                SetVehicleIndicatorLights(vehicle, 0, true)
+                SetVehicleIndicatorLights(vehicle, 1, true)
+            end
+        end
+    end
+end
 
 RegisterKeyMapping('seatbelt', 'Seat Belt', 'keyboard', 'K')
 
@@ -56,20 +116,20 @@ RegisterCommand('seatbelt', function()
     if IsPedInAnyVehicle(ply) then
         if antiSpam == false then
             if vehicleCategories ~= 13 and vehicleCategories ~= 8 then
-                seatbelttoggle = not seatbelttoggle
-                if seatbelttoggle == true then
+                seatbeltToggle = not seatbeltToggle
+                if seatbeltToggle == true then
                     antiSpam = true
                     Wait(2000)
                     antiSpam = false
                     SetFlyThroughWindscreenParams(10000.0, 10000.0, 17.0, 500.0);
-                    while seatbelttoggle do
+                    while seatbeltToggle do
                         DisableControlAction(0,75)
                         Citizen.Wait(5)
                     end
                 else
                     SetFlyThroughWindscreenParams(16.0, 19.0, 17.0, 2000.0)
                     SetPedConfigFlag(PlayerPedId(), 32, true)
-                    seatbelttoggle = false
+                    seatbeltToggle = false
                     antiSpam = true
                     Wait(2000)
                     antiSpam = false

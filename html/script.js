@@ -12,7 +12,14 @@ window.addEventListener("message", function (event) {
                 $('#gear span').text(incomData.gearLevel)
             }
             $('#speeds span').text(speedsInt)
-            $('.progress').css({'width': incomData.rpmLevel + `%`})
+            $('.progressRpm').css({ 'width': incomData.rpmLevel + `%` })
+            if (!incomData.turboPressureLevel) {
+                $('.progressInnerTurbo').hide()
+            } else {
+                $('.progressInnerTurbo').show()
+                $('.progressTurbo').css({'width': incomData.turboPressureLevel + `%`})
+            }
+            
             if (incomData.fuelLevel > 80.0) {
                 $('.pump svg').css({'fill': `#209d05`})
                 $('.pump svg').css({'filter': `drop-shadow(3px 5px 2px #209d059c)`})

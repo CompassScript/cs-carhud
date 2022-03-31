@@ -1,4 +1,4 @@
-window.addEventListener("message", function(event) {
+window.addEventListener("message", function (event) {
     var incomData = event.data;
     switch (incomData.process) {
         case 'show':
@@ -68,6 +68,29 @@ window.addEventListener("message", function(event) {
             } else {
                 $('.seatbelt svg').css({'fill': `#e0e0e0`})
                 $('.seatbelt svg').css({'filter': `drop-shadow(3px 5px 2px #e0e0e09c)`})
+            }
+            if (incomData.indicatorsState) {
+                if (incomData.indicatorsState == 'off') {
+                    $('.indicator.mxPack').removeClass('active')
+                    $('#bothIndicators').show()
+                    $('#leftIndicator').hide()
+                    $('#rightIndicator').hide()
+                } else if (incomData.indicatorsState == 'left') {
+                    $('.indicator.mxPack').addClass('active')
+                    $('#bothIndicators').hide()
+                    $('#leftIndicator').show()
+                    $('#rightIndicator').hide()
+                } else if (incomData.indicatorsState == 'right') {
+                    $('.indicator.mxPack').addClass('active')
+                    $('#bothIndicators').hide()
+                    $('#leftIndicator').hide()
+                    $('#rightIndicator').show()
+                } else if (incomData.indicatorsState == 'both') {
+                    $('.indicator.mxPack').addClass('active')
+                    $('#bothIndicators').show()
+                    $('#leftIndicator').hide()
+                    $('#rightIndicator').hide()
+                }
             }
         break
         case 'hide':

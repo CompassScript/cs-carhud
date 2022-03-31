@@ -74,6 +74,17 @@ body {
     filter: drop-shadow(3px 5px 2px #8eda509a);
 }
 
+.indicator svg {
+    fill: #ffffff;
+    filter: drop-shadow(3px 5px 2px #ffffff9a);
+}
+
+.indicator.active svg {
+    fill: #00ff37;
+    filter: drop-shadow(3px 5px 2px #8eda509a);
+    animation: blinker 1s steps(2, start) infinite;
+}
+
 .mxPack {
     margin-right: auto;
     margin-left: auto;
@@ -113,4 +124,10 @@ body {
 .speedo p {
     color: white;
     width: 50%;
+}
+
+@keyframes blinker {  
+    to {
+        visibility: hidden;
+      }
 }

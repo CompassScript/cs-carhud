@@ -19,12 +19,18 @@
             </div>
             <svg class="svg">
                 <clipPath id="my-clip-path" clipPathUnits="objectBoundingBox"><path d="M0,1 S0.035,0.002,0.176,0.002 C0.301,0.001,0.397,0.001,0.476,0.001 C0.691,0,0.783,0,1,0.002 V0.492 H0.176 S0.096,0.475,0,1"></path></clipPath>
+                <clipPath id="turboPressurePath" clipPathUnits="objectBoundingBox"><path d="M 0 1 S 0.055 0.532 0.176 0.45 C 0.301 0.45 0.397 0.45 0.476 0.45 C 0.691 0.45 0.783 0.45 1 0.45 V 0.492 H 0.176 S 0.096 0.475 0 1"></path></clipPath>
             </svg>
-            <div class="progressInner">
-                <div class="progress"></div>    
+          <div class="outer">
+            <div class="progressInnerRpm">
+                <div class="progressRpm"></div>   
             </div>
+            <div class="progressInnerTurbo">  
+                    <div class="progressTurbo"></div>  
+                </div>
+          </div>
+            
             <div class="vehObject">
-
                 <div class="indicator mxPack">
                     <svg id="bothIndicators" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M377.941 169.941V216H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.568 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296h243.882v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.568 0-33.941l-86.059-86.059c-15.119-15.12-40.971-4.412-40.971 16.97z"/></svg>
                     <svg id="rightIndicator" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 304v-96c0-13.3 10.7-24 24-24h200V80.2c0-21.4 25.8-32.1 41-17L441 239c9.4 9.4 9.4 24.6 0 34L265 448.7c-15.1 15.1-41 4.4-41-17V328H24c-13.3 0-24-10.7-24-24z"/></svg>

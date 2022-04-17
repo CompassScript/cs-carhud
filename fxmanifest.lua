@@ -23,5 +23,3 @@ files {
 	'html/style.css',
 	'html/script.js',
 }
-
-client_script "@errorlog/client/cl_errorlog.lua"
